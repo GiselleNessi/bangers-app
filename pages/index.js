@@ -45,7 +45,6 @@ export default function Home() {
     setFilteredFiles(filtered);
   };
 
-
   return (
     <>
       <Head>
@@ -69,7 +68,6 @@ export default function Home() {
                 className="search-input"
               />
             </div>
-
             <div className="file-viewer">
               {error ? (
                 <div>{error}</div>
@@ -78,11 +76,11 @@ export default function Home() {
                   {filteredFiles.map((file, index) => (
                     <div key={`${file.ipfs_pin_hash}-${index}`} className="file-item">
                       <a
-                        href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}?pinataGatewayToken=${process.env.NEXT_PUBLIC_GATEWAY_TOKEN}`}
+                        href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
                         download={file.metadata.name}
                       >
                         <img
-                          src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}?pinataGatewayToken=${process.env.NEXT_PUBLIC_GATEWAY_TOKEN}`}
+                          src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
                           alt="File"
                           width="100%"
                           height="200"
@@ -90,11 +88,9 @@ export default function Home() {
                       </a>
                     </div>
                   ))}
-
                 </div>
               )}
             </div>
-
           </div>
         </div>
       </main>

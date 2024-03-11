@@ -48,8 +48,8 @@ export default async function handler(req, res) {
   } else if (req.method === "GET") {
     try {
       const response = await pinata.pinList({
-        pinataJWTKey: process.env.PINATA_JWT,
         pageLimit: 1000, // Set pageLimit to fetch all files (up to 1000)
+        status: 'pinned'
       });
       res.json(response.rows); // Return all files
     } catch (e) {
@@ -57,5 +57,4 @@ export default async function handler(req, res) {
       res.status(500).send("Server Error");
     }
   }
-
 }
