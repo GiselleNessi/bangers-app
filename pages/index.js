@@ -49,9 +49,9 @@ export default function Home() {
     <>
       <Head>
         <title>Bangers App</title>
-        <meta name="description" content="Generated with create-pinata-app" />
+        <meta name="description" content="ART FUCKING MATTERS" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/pinnie.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <div className="logo">
