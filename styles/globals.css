@@ -188,6 +188,7 @@ a {
 .file-viewer {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between; /* Distribute items evenly in a row */
 }
 
 .file-item {
@@ -196,12 +197,37 @@ a {
   margin: 8px; /* Adjust margin as needed for spacing between items */
 }
 
+/* Adjust for screens larger than 1200px */
+@media (min-width: 1200px) {
+  .file-item {
+    flex: 1 1 calc(16.666% - 16px); /* Ensure each item occupies approximately 16.666% of the container's width */
+    max-width: calc(16.666% - 16px); /* Adjust based on the number of items you want per row */
+  }
+}
+
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+  .file-item {
+    flex: 1 1 calc(50% - 16px); /* Each item will have a width of approximately 50% minus margins */
+    max-width: calc(50% - 16px); /* Adjust based on the number of items you want per row */
+  }
+}
+
+/* Adjust for even smaller screens */
+@media (max-width: 480px) {
+  .file-item {
+    flex: 1 1 calc(100% - 16px); /* Each item will have a width of 100% minus margins */
+    max-width: calc(100% - 16px); /* Adjust based on the number of items you want per row */
+  }
+}
 
 .file-item img {
   width: 100%;
   height: auto;
   border-radius: 8px;
 }
+
 
 .grid-background {
   background: var(--color-secondary);

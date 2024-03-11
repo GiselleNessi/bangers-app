@@ -7,17 +7,17 @@ export default function Home() {
   const [filteredFiles, setFilteredFiles] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
   const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
   const loadAllFiles = async () => {
     try {
       console.log("Fetching all files...");
       const res = await fetch(`/api/files`);
-      console.log("Response received:", res);
       const json = await res.json();
-      console.log("JSON data:", json);
       setFiles(json);
       setFilteredFiles(json);
+      setLoading(false); // Set loading to false when data is fetched
     } catch (e) {
       console.log("Error:", e);
       setError("Trouble loading files");
@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    loadAllFiles(); // Load all files initially
+    loadAllFiles();
   }, []);
 
   const handleSearch = (e) => {
@@ -33,10 +33,8 @@ export default function Home() {
     setSearchQuery(query);
     let regex;
     if (/^\d{1,3}$/.test(query)) {
-      // If the query is a single, two, or three-digit number
       regex = new RegExp(`\\b${query}\\b`, 'i');
     } else {
-      // Otherwise, use the previous pattern
       regex = new RegExp(`(^|[^0-9])${query}(?![0-9])`, 'i');
     }
     const filtered = files.filter((file) =>
@@ -69,8 +67,8 @@ export default function Home() {
               />
             </div>
             <div className="file-viewer">
-              {error ? (
-                <div>{error}</div>
+              {loading ? ( // Render loading indicator if loading is true
+                <div>Loading...</div>
               ) : (
                 <div className="file-viewer">
                   {filteredFiles.map((file, index) => (
@@ -84,6 +82,7 @@ export default function Home() {
                           alt="File"
                           width="100%"
                           height="200"
+                          onLoad={() => console.log('Image loaded')} // Add onLoad event handler
                         />
                       </a>
                     </div>
