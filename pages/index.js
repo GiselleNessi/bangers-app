@@ -7,7 +7,7 @@ export default function Home() {
   const [filteredFiles, setFilteredFiles] = useState([]); // Add filteredFiles state
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); // Add searchQuery state
-  const GATEWAY_URL = "https://btcbangers.mypinata.cloud";
+  const GATEWAY_URL = "https://www.btcbangers.xyz/";
 
   const loadAllFiles = async () => {
     try {
