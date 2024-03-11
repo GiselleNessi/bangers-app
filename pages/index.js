@@ -4,10 +4,10 @@ import Image from "next/image";
 
 export default function Home() {
   const [files, setFiles] = useState([]);
-  const [filteredFiles, setFilteredFiles] = useState([]); // Add filteredFiles state
+  const [filteredFiles, setFilteredFiles] = useState([]);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // Add searchQuery state
-  const GATEWAY_URL = "https://btcbangers.mypinata.cloud.";
+  const [searchQuery, setSearchQuery] = useState("");
+  const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
   const loadAllFiles = async () => {
     try {
@@ -16,8 +16,8 @@ export default function Home() {
       console.log("Response received:", res);
       const json = await res.json();
       console.log("JSON data:", json);
-      setFiles(json); // Set files state with all files received from the server
-      setFilteredFiles(json); // Initialize filteredFiles with all files
+      setFiles(json);
+      setFilteredFiles(json);
     } catch (e) {
       console.log("Error:", e);
       setError("Trouble loading files");
