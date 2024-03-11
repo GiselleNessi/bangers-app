@@ -47,16 +47,15 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "GET") {
     try {
-      const response = await pinata.pinList(
-        { pinataJWTKey: process.env.PINATA_JWT },
-        {
-          pageLimit: 1,
-        }
-      );
-      res.json(response.rows[0]);
+      const response = await pinata.pinList({
+        pinataJWTKey: process.env.PINATA_JWT,
+        pageLimit: 1000, // Set pageLimit to fetch all files (up to 1000)
+      });
+      res.json(response.rows); // Return all files
     } catch (e) {
       console.log(e);
       res.status(500).send("Server Error");
     }
   }
+
 }
