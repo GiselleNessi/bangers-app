@@ -12,7 +12,6 @@ export default function Home() {
 
   const loadAllFiles = async () => {
     try {
-      console.log("Fetching all files...");
       const res = await fetch(`/api/files`);
       const json = await res.json();
       setFiles(json);
@@ -66,7 +65,7 @@ export default function Home() {
                 className="search-input"
               />
             </div>
-            <div className="file-viewer">
+            <div>
               {loading ? (
                 <div>Loading...</div>
               ) : (
@@ -76,11 +75,14 @@ export default function Home() {
                       <a
                         href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
                         download={file.metadata.name}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        <img
+                        <Image
                           src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
                           alt="File"
-                          style={{ width: "100%", height: "auto" }}
+                          width={200}
+                          height={200}
                           onLoad={() => console.log('Image loaded')}
                         />
                       </a>

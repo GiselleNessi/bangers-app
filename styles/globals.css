@@ -82,14 +82,15 @@ a {
 .file-viewer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* Horizontally center items */
+  align-items: center; 
+  gap: 1rem;
 }
 
 .file-item {
-  flex: 0 0 calc(16.666% - 16px); 
-  max-width: calc(16.666% - 16px);
-  margin: 8px; 
+  flex: 0 0 auto; /* Allow item to take up content width */
 }
+
 
 /* Adjust for smaller screens */
 @media (max-width: 768px) {
