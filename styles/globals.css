@@ -135,3 +135,35 @@ a {
 .search-bar {
   margin: auto;
 }
+
+/* CSS for Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: 1px solid black;
+  
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.file-viewer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.file-item {
+  margin: 10px;
+}
+

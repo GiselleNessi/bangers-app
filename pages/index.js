@@ -10,8 +10,17 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
+  // State to manage the active tab
+  const [activeTab, setActiveTab] = useState(1);
+
+  // Calculate the files to display in each tab
+  const filesForTab1 = filteredFiles.slice(-333); // Get the last 333 images
+  const filesForTab2 = filteredFiles; // All images
+
+
   const loadAllFiles = async () => {
     try {
+      // biome-ignore lint/style/noUnusedTemplateLiteral: <explanation>
       const res = await fetch(`/api/files`);
       const json = await res.json();
       setFiles(json);
@@ -23,6 +32,7 @@ export default function Home() {
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     loadAllFiles();
   }, []);
@@ -59,7 +69,7 @@ export default function Home() {
             <div className="search-bar">
               <input
                 type="text"
-                placeholder="Search by name..."
+                placeholder="Search by number..."
                 value={searchQuery}
                 onChange={handleSearch}
                 className="search-input"
@@ -69,28 +79,79 @@ export default function Home() {
               {loading ? (
                 <div>Loading...</div>
               ) : (
-                <div className="file-viewer">
-                  {filteredFiles.map((file, index) => (
-                    <div key={`${file.ipfs_pin_hash}-${index}`} className="file-item">
-                      <a
-                        href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
-                        download={file.metadata.name}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Image
-                          src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
-                          alt="File"
-                          width={200}
-                          height={200}
-                          onLoad={() => console.log('Image loaded')}
-                        />
-                      </a>
-                    </div>
-                  ))}
+                <div>
+                  {/* Tab Navigation */}
+                  <div className="tabs">
+                    {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+                    <button
+                      onClick={() => setActiveTab(1)}
+                      className={activeTab === 1 ? 'active' : ''}
+                    >
+                      First Show
+                    </button>
+                    {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+                    <button
+                      onClick={() => setActiveTab(2)}
+                      className={activeTab === 2 ? 'active' : ''}
+                    >
+                      Second show
+                    </button>
+                  </div>
+
+                  {/* Tab Content */}
+                  <div>
+                    {activeTab === 1 && (
+                      <div className="file-viewer">
+                        {filesForTab1.map((file, index) => (
+                          <div key={`${file.ipfs_pin_hash}-${index}`} className="file-item">
+                            <a
+                              href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
+                              download={file.metadata.name}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Image
+                                src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
+                                alt="File"
+                                width={200}
+                                height={200}
+                                onLoad={() => console.log('Image loaded')}
+                              />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* End of Tab 1 Content */}
+
+                    {activeTab === 2 && (
+                      <div className="file-viewer">
+                        {filesForTab2.map((file, index) => (
+                          <div key={`${file.ipfs_pin_hash}-${index}`} className="file-item">
+                            <a
+                              href={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
+                              download={file.metadata.name}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Image
+                                src={`${GATEWAY_URL}/ipfs/${file.ipfs_pin_hash}`}
+                                alt="File"
+                                width={200}
+                                height={280}
+                                onLoad={() => console.log('Image loaded')}
+                              />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* End of Tab 2 Content */}
+                  </div>
                 </div>
               )}
             </div>
+
           </div>
         </div>
       </main>
